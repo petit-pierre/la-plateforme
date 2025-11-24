@@ -1,10 +1,4 @@
-/* =====================================================
-   admin.js — Contrôle d'accès + mini-dash admin
-   ===================================================== */
-
-/**
- * Retourne l'utilisateur connecté (depuis localStorage)
- */
+/**Retourne l'utilisateur connecté (depuis localStorage)*/
 function getCurrentUser() {
     const data = localStorage.getItem("currentUser");
     return data ? JSON.parse(data) : null;
@@ -18,9 +12,7 @@ function redirectToLogin() {
 }
 
 
-/* =====================================================
-   Vérification d'accès (admin uniquement)
-   ===================================================== */
+/* Vérification d'accès (admin uniquement) */
 
 const currentUser = getCurrentUser();
 
@@ -28,10 +20,6 @@ if (!currentUser || currentUser.role !== "admin") {
     redirectToLogin();
 }
 
-
-/* =====================================================
-   Affichage des statistiques du dashboard
-   ===================================================== */
 
 // Cibles HTML optionnelles (si présentes)
 const statUsers = document.getElementById("stat-users");

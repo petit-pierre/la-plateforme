@@ -1,6 +1,4 @@
-/* =====================================================
-   connexion.js — Connexion / Déconnexion utilisateur
-   ===================================================== */
+/* connexion.js — Connexion / Déconnexion utilisateur */
 
 /**
  * Renvoie l'utilisateur actuellement connecté
@@ -26,9 +24,7 @@ function logout() {
 }
 
 
-/* =====================================================
-   Fonction LOGIN (à appeler depuis la page de connexion)
-   ===================================================== */
+/* Fonction LOGIN (à appeler depuis la page de connexion)*/
 
 function login(email, password) {
 

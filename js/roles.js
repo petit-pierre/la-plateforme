@@ -42,9 +42,9 @@ function renderUsers() {
    ============================================ */
 function renderRoleBadge(role) {
     const colors = {
-        "admin": "#000",
-        "moderator": "#555",
-        "user": "#888"
+        "admin": "#c2168eff",
+        "moderator": "#2079a6ff",
+        "user": "#bad677ff"
     };
 
     return `
