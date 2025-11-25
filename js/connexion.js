@@ -1,48 +1,32 @@
-document.addEventListener('DOMContentLoaded', () => {
-  // Si on est sur la page de connexion : capture et enregistre les valeurs
-  const form = document.getElementById('connexion-form');
-  if (form) {
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const email = form.querySelector('input[name="email"]')?.value ?? '';
-      const password = form.querySelector('input[name="password"]')?.value ?? '';
-      const users = JSON.parse(localStorage.getItem('users') || '[{"id" : 0, "email" : "admin@laplateforme.io", "role" : "admin", "password" : "admin"}]');
-      const foundUser = users.find(u => 
-            u.email === email.trim() && 
-            u.password === password.trim()
-        );
-      console.log("Tentative de connexion avec :", localStorage.getItem('users'));
-      if (foundUser)
-      {
-        //console.log("Utilisateur trouvé :", foundUser);
-        localStorage.setItem('user_id', foundUser.id);
-        localStorage.setItem('login', foundUser.email);
-        localStorage.setItem('role', foundUser.role);
+const getUsers = async function () {
+  const response = await fetch("./data/users.json");
+  if (response.ok) {
+    const result = await response.json();
+    return result;
+  }
+  return false;
+};
+
+document.querySelector(".button").addEventListener("click", function (e) {
+  e.preventDefault();
+  const email = document.querySelector('input[name="email"]').value;
+  const password = document.querySelector('input[name="password"]').value;
+
+  getUsers().then((users) => {
+    if (users) {
+      const foundUser = users.find(
+        (u) => u.email === email.trim() && u.password === password.trim()
+      );
+      if (foundUser) {
+        localStorage.setItem("user_id", foundUser.id);
+        localStorage.setItem("email", foundUser.email);
+        localStorage.setItem("role", foundUser.role);
+        window.location.href = "index.html";
+      } else {
+        alert("Utilisateur ou mot de passe incorrect.");
       }
-      // Redirige vers index.html après sauvegarde (optionnel)
-      //window.location.href = 'index.html';
-    });
-    return;
-  }
-
-
-
-
-  // Si on est sur index.html : récupère et affiche les valeurs stockées
-  const userInfo = document.getElementById('user-info');
-  if (userInfo) {
-    const email = localStorage.getItem('email') || '';
-    const password = localStorage.getItem('password') || '';
-    userInfo.innerHTML = `
-      <p>Email : ${escapeHtml(email)}</p>
-      <p>Mot de passe : ${escapeHtml(password)}</p>
-    `;
-  }
+    } else {
+      alert("Erreur lors de la récupération des utilisateurs.");
+    }
+  });
 });
-
-// Petit utilitaire pour échapper le HTML et éviter l'injection
-function escapeHtml(str) {
-  return String(str).replace(/[&<>"']/g, (m) =>
-    ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[m]
-  );
-}
