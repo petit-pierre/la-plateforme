@@ -40,7 +40,14 @@ function renderCalendar(month, year) {
   const daysInMonth = new Date(year, month + 1, 0).getDate();
 
   cases.forEach((c) => {
-    c.classList.remove("other-month", "today", "selected", "reserved");
+    c.classList.remove(
+      "other-month",
+      "today",
+      "selected",
+      "reserved",
+      "refused",
+      "accepted"
+    );
     c.innerHTML = "";
     c.removeAttribute("data-day");
   });
